@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geometry Constraint Explorer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        canvas {
+            width: 580px !important;
+            height: 580px !important;
+            max-width: 580px;
+            max-height: 580px;
+        }
+        .slider-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            align-items: center;
+        }
+        .slider-input {
+            width: 100%;
+            padding: 6px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-purple-100 to-blue-100 min-h-screen p-8">
+    <div class="max-w-7xl mx-auto">
+        <h1 class="text-4xl font-bold text-center mb-2 text-gray-800">🔷 Geometry Constraint Explorer</h1>
+        <p class="text-center text-gray-600 mb-8">Describe spatial constraints. Watch how the model interprets geometric rules.</p>
+
+        <div class="grid grid-cols-2 gap-8">
+            <!-- LEFT PANEL: CONTROLS -->
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <h2 class="text-2xl font-bold mb-6 text-gray-800">Spatial Parameters</h2>
+
+                <!-- Shape Selector -->
+                <div class="mb-6">
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Shape Type</label>
+                    <select id="shapeSelector" class="slider-input w-full text-base">
+                        <option value="polygon">Regular Polygon</option>
+                        <option value="rectangle">Rectangle</option>
+                        <option value="ellipse">Ellipse</option>
+                        <option value="star">Star</option>
+                        <option value="circle">Circle</option>
+                        <option value="spiral">Spiral</option>
+                    </select>
+                </div>
+
+                <!-- UNIVERSAL SLIDERS (all shapes) -->
+                <div class="border-t border-gray-300 pt-6 mb-6">
+                    <h3 class="font-semibold text-gray-700 mb-4">Universal Parameters</h3>
+
+                    <!-- X Position -->
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">X Position</label>
+                        <div class="slider-row">
+                            <input type="range" id="posX" min="-10" max="10" value="0" class="w-full">
+                            <input type="number" id="posXNum" min="-10" max="10" value="0" class="slider-input">
+                        </div>
+                    </div>
+
+                    <!-- Y Position -->
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Y Position</label>
+                        <div class="slider-row">
+                            <input type="range" id="posY" min="-10" max="10" value="0" class="w-full">
+                            <input type="number" id="posYNum" min="-10" max="10" value="0" class="slider-input">
+                        </div>
+                    </div>
+
+                    <!-- Scale Multiplier -->
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Scale Multiplier</label>
+                        <div class="slider-row">
+                            <input type="range" id="scale" min="0.1" max="5" step="0.1" value="1" class="w-full">
+                            <input type="number" id="scaleNum" min="0.1" max="5" step="0.1" value="1" class="slider-input">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SHAPE-SPECIFIC SLIDERS -->
+                <div id="shapeSpecificContainer" class="border-t border-gray-300 pt-6 mb-6">
+                    <h3 class="font-semibold text-gray-700 mb-4">Shape Parameters</h3>
+                    <div id="shapeControls"></div>
+                </div>
+
+                <!-- GENERATE BUTTON -->
+                <button id="generateBtn" class="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-bold py-3 px-6 rounded-lg transition transform hover:scale-105 active:scale-95">
+                    Generate from Constraints
+                </button>
+            </div>
+
+            <!-- RIGHT PANEL: CANVAS & OUTPUT -->
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <h2 class="text-2xl font-bold mb-6 text-gray-800">Visualization</h2>
+
+                <!-- Canvas -->
+                <canvas id="canvas" width="580" height="580" class="border-2 border-gray-300 rounded-lg bg-gray-50 mb-6 w-full"></canvas>
+
+                <!-- Constraint Summary -->
+                <div id="constraintSummary" class="bg-blue-50 border-l-4 border-blue-600 p-4 rounded mb-6">
+                    <p class="text-sm text-gray-700 font-mono">Adjust sliders to update constraints...</p>
+                </div>
+
+                <!-- Output Container -->
+                <div id="outputContainer"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="index.js"></script>
+</body>
+</html>
